@@ -1,0 +1,290 @@
+/* ============================================================================
+   CALCULADORA CIENTÍFICA SENATI - ESTILOS QSS
+   ============================================================================ */
+
+/* ========== VENTANA PRINCIPAL ========== */
+QWidget {
+    background-color: transparent;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ========== TÍTULO DE LA VENTANA ========== */
+#titulo_label {
+    color: #cccccc;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    background: transparent;
+}
+
+/* ========== BOTÓN ENCENDIDO ========== */
+#btn_encendido {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #4a7a4a, stop:1 #3a6a3a);
+    color: #aaffaa;
+    border: 1px solid #5a8a5a;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#btn_encendido:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #5a8a5a, stop:1 #4a7a4a);
+    color: #ffffff;
+}
+
+#btn_encendido:pressed {
+    background: #2a5a2a;
+}
+
+/* ========== BOTÓN CERRAR ========== */
+#btn_cerrar {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #8a4a4a, stop:1 #7a3a3a);
+    color: #ffaaaa;
+    border: 1px solid #9a5a5a;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#btn_cerrar:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #aa5a5a, stop:1 #9a4a4a);
+    color: #ffffff;
+}
+
+#btn_cerrar:pressed {
+    background: #6a2a2a;
+}
+
+/* ========== RADIO BUTTONS DEG/RAD ========== */
+#radio_modo {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    background: transparent;
+}
+
+#radio_modo:disabled {
+    color: #666666;
+}
+
+#radio_modo::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+}
+
+#radio_modo::indicator:checked {
+    background-color: #4CAF50;
+    border: 2px solid #fff;
+    border-radius: 8px;
+}
+
+#radio_modo::indicator:unchecked {
+    background-color: #555;
+    border: 2px solid #888;
+    border-radius: 8px;
+}
+
+#radio_modo::indicator:disabled {
+    background-color: #333;
+    border: 2px solid #444;
+}
+
+/* ========== CHECKBOX SONIDO ========== */
+#check_sonido {
+    color: #ffffff;
+    font-size: 14px;
+    background: transparent;
+}
+
+#check_sonido:disabled {
+    color: #666666;
+}
+
+/* ========== BOTONES UTILITARIOS (Copiar/Pegar) ========== */
+#btn_util {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #5a5a5a, stop:1 #3a3a3a);
+    color: #ffffff;
+    border: 1px solid #666;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+#btn_util:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #6a6a6a, stop:1 #4a4a4a);
+}
+
+#btn_util:pressed {
+    background: #333;
+}
+
+#btn_util:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
+
+/* ========== BOTONES DE NAVEGACIÓN (flechas) ========== */
+#btn_nav {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #4a6a8a, stop:1 #3a5a7a);
+    color: #ffffff;
+    border: 1px solid #5a7a9a;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#btn_nav:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #5a7a9a, stop:1 #4a6a8a);
+}
+
+#btn_nav:pressed {
+    background: #2a4a6a;
+}
+
+#btn_nav:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
+
+/* ========== BOTONES CIENTÍFICOS (sin, cos, sqrt, etc.) ========== */
+#btn_cientifico {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #5a5a6a, stop:1 #4a4a5a);
+    color: #e0e0ff;
+    border: 1px solid #6a6a7a;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#btn_cientifico:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #6a6a7a, stop:1 #5a5a6a);
+    color: #ffffff;
+}
+
+#btn_cientifico:pressed {
+    background: #3a3a4a;
+}
+
+#btn_cientifico:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
+
+/* ========== BOTONES NUMÉRICOS (0-9 y punto) ========== */
+#btn_numero {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #4a4a4a, stop:1 #3a3a3a);
+    color: #ffffff;
+    border: 1px solid #5a5a5a;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#btn_numero:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #5a5a5a, stop:1 #4a4a4a);
+}
+
+#btn_numero:pressed {
+    background: #2a2a2a;
+}
+
+#btn_numero:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
+
+/* ========== BOTONES OPERADORES (+, -, ×, /) ========== */
+#btn_operador {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #6a5a4a, stop:1 #5a4a3a);
+    color: #ffffff;
+    border: 1px solid #7a6a5a;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#btn_operador:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #7a6a5a, stop:1 #6a5a4a);
+}
+
+#btn_operador:pressed {
+    background: #4a3a2a;
+}
+
+#btn_operador:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
+
+/* ========== BOTÓN IGUAL (=) ========== */
+#btn_igual {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #4a8a4a, stop:1 #3a7a3a);
+    color: #ffffff;
+    border: 1px solid #5a9a5a;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#btn_igual:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #5a9a5a, stop:1 #4a8a4a);
+}
+
+#btn_igual:pressed {
+    background: #2a6a2a;
+}
+
+#btn_igual:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
+
+/* ========== BOTONES BORRAR (C y ⌫) ========== */
+#btn_borrar {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #8a4a4a, stop:1 #7a3a3a);
+    color: #ffffff;
+    border: 1px solid #9a5a5a;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#btn_borrar:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #9a5a5a, stop:1 #8a4a4a);
+}
+
+#btn_borrar:pressed {
+    background: #6a2a2a;
+}
+
+#btn_borrar:disabled {
+    background: #333;
+    color: #555;
+    border: 1px solid #444;
+}
