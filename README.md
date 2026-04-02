@@ -1,46 +1,73 @@
-# Calculadora Cientifica (PyQt5)
+# Calculadora Cientifica con PyQt5
 
-Aplicacion de escritorio con interfaz personalizada, modo DEG/RAD, funciones cientificas, sonido de teclas y animacion de encendido/apagado.
+Resumen del proyecto: aplicacion de escritorio con interfaz estilo LCD, funciones cientificas, sonidos y animacion de encendido/apagado.
 
-## Vista de la aplicacion
+## Objetivo 🎯
 
-![Vista 1](img1.png)
-![Vista 2](img2.png)
+Crear una calculadora cientifica visualmente atractiva y funcional para operaciones comunes y avanzadas, con soporte de:
 
-## Ejecutar en desarrollo
+- Modo angular DEG/RAD
+- Trigonometria directa e inversa
+- Potencias, raices, factorial y modulo
+- Interfaz personalizada con QSS
+- Audio de interaccion y estado
 
-1. Instalar dependencias:
+## Capturas 🖼️
+
+![Interfaz principal](img1.png)
+![Operacion de ejemplo](img2.png)
+
+## Funcionalidades principales ⚙️
+
+- Operaciones basicas: suma, resta, multiplicacion y division
+- Funciones cientificas: sin, cos, tan, asin, acos, atan, log, ln, sqrt, factorial, nthroot
+- Formato visual: superindices y fracciones en pantalla LCD
+- Utilidades: copiar/pegar, navegacion por cursor, encendido/apagado
+
+## Estructura del proyecto 📁
+
+- Calculadora.py: aplicacion principal
+- calculadora.qss: estilos visuales
+- PRENDER.mp3, APAGAR.mp3, click.wav: recursos de audio
+- img1.png, img2.png: imagenes de documentacion
+
+## Requisitos 📦
+
+Instalar dependencias:
 
 ```bash
-pip install PyQt5
+pip install -r requirements.txt
 ```
 
-2. Ejecutar:
+## Ejecucion en modo desarrollo ▶️
 
 ```bash
 python Calculadora.py
 ```
 
-## Ejecutable (.exe)
+## Compilacion a EXE 🛠️
 
-El ejecutable generado se encuentra en:
-
-- `dist/Calculadora/Calculadora.exe`
-
-Para volver a compilarlo:
+### Opcion A: Carpeta con EXE + dependencias (recomendada)
 
 ```bash
 python -m PyInstaller --noconfirm --windowed --name Calculadora --add-data "calculadora.qss;." --add-data "PRENDER.mp3;." --add-data "APAGAR.mp3;." --add-data "click.wav;." Calculadora.py
 ```
 
-## Estructura principal
+Salida:
 
-- `Calculadora.py`: app principal
-- `calculadora.qss`: estilos
-- `PRENDER.mp3`, `APAGAR.mp3`, `click.wav`: audio
-- `dist/Calculadora/Calculadora.exe`: binario compilado
+- dist/Calculadora/Calculadora.exe
 
-## Notas
+### Opcion B: Un solo archivo EXE (onefile)
 
-- Si ejecutas con Code Runner y aparece un archivo temporal, ya esta corregido para no romper la ejecucion.
-- Si no escuchas audio, verifica que los archivos `.mp3` y `.wav` esten junto al ejecutable o incluidos en `dist`.
+```bash
+python -m PyInstaller --noconfirm --onefile --windowed --name Calculadora_OneFile --add-data "calculadora.qss;." --add-data "PRENDER.mp3;." --add-data "APAGAR.mp3;." --add-data "click.wav;." Calculadora.py
+```
+
+Salida:
+
+- dist/Calculadora_OneFile.exe
+
+## Observaciones ✅
+
+- Si quieres maxima compatibilidad de audio/multimedia, la opcion de carpeta suele ser mas estable.
+- Si prefieres distribuir un unico archivo, la opcion onefile ya esta generada y es funcional.
