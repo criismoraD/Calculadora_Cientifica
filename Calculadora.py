@@ -8,8 +8,23 @@ from PyQt5.QtWidgets import (
     QPushButton, QGridLayout, QRadioButton, QCheckBox, QLabel
 )
 from PyQt5.QtCore import Qt, QUrl, QTimer
-from PyQt5.QtGui import QPainter, QFont, QPen, QColor, QLinearGradient
+from PyQt5.QtGui import QPainter, QFont, QPen, QColor, QLinearGradient, QPalette
 from PyQt5.QtMultimedia import QSoundEffect, QMediaPlayer, QMediaContent
+
+
+def aplicar_palette_oscura(app):
+    """Aplica una paleta oscura base para mejorar la coherencia visual."""
+    palette = app.palette()
+    palette.setColor(QPalette.Window, QColor(42, 42, 42))
+    palette.setColor(QPalette.WindowText, QColor(230, 230, 230))
+    palette.setColor(QPalette.Base, QColor(28, 28, 28))
+    palette.setColor(QPalette.AlternateBase, QColor(38, 38, 38))
+    palette.setColor(QPalette.Text, QColor(230, 230, 230))
+    palette.setColor(QPalette.Button, QColor(58, 58, 58))
+    palette.setColor(QPalette.ButtonText, QColor(240, 240, 240))
+    palette.setColor(QPalette.Highlight, QColor(76, 175, 80))
+    palette.setColor(QPalette.HighlightedText, QColor(18, 18, 18))
+    app.setPalette(palette)
 
 
 # ============================================================================
@@ -1073,6 +1088,7 @@ class Calculadora(QWidget):
 # ============================================================================
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    aplicar_palette_oscura(app)
     calculadora = Calculadora()
     calculadora.show()
     sys.exit(app.exec_())
