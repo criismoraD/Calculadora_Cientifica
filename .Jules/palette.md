@@ -1,0 +1,3 @@
+## 2024-03-21 - Add tooltips and accessible names to icon-only buttons
+**Learning:** Found that multiple icon-only buttons (`|◀`, `◀`, `▶`, `▶|`, `C`, `⌫`) lacked accessible names and tooltips in the PyQt5 application, which is a common accessibility issue for screen readers. I also added keyboard shortcut hints to the tooltips to improve usability.
+**Action:** When working on PyQt5 desktop applications, proactively check icon-only or symbol-only `QPushButton` instances and ensure `setToolTip()` and `setAccessibleName()` are populated. Consider adding keyboard shortcut hints in tooltips for primary actions (e.g., Enter for =, Esc for Clear).
