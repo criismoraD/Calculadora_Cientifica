@@ -2,6 +2,7 @@ import sys
 import os
 import math
 import re
+import ast
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QGridLayout, QRadioButton, QCheckBox, QLabel
@@ -965,6 +966,35 @@ class Calculadora(QWidget):
     def _nthroot(x, n):
         return x ** (1 / n)
 
+    def _es_expresion_segura(self, expr):
+        """
+        Verifica que la expresión sea segura antes de usar eval().
+        Utiliza el módulo ast para permitir sólo nodos y funciones matemáticas seguras.
+        """
+        if len(expr) > 1000:
+            return False
+
+        try:
+            tree = ast.parse(expr, mode='eval')
+        except Exception:
+            return False
+
+        nodos_permitidos = {
+            'Expression', 'BinOp', 'UnaryOp', 'Add', 'Sub', 'Mult', 'Div',
+            'Pow', 'Mod', 'USub', 'UAdd', 'Constant', 'Name', 'Load', 'Call',
+            'Num', 'NameConstant' # Compatibilidad con Python antiguo
+        }
+
+        nombres_permitidos = set(self._contexto_evaluacion().keys())
+
+        for nodo in ast.walk(tree):
+            if type(nodo).__name__ not in nodos_permitidos:
+                return False
+            if isinstance(nodo, ast.Name) and getattr(nodo, 'id', None) not in nombres_permitidos:
+                return False
+
+        return True
+
     def _contexto_evaluacion(self):
         """Funciones permitidas para la evaluación segura de expresiones."""
         return {
@@ -998,6 +1028,10 @@ class Calculadora(QWidget):
                 expr += ')' * parentesis_abiertos
                 self.operacion_actual = expr
                 self.cursor_pos = len(self.operacion_actual)
+
+            # Verificar seguridad con AST antes de evaluar
+            if not self._es_expresion_segura(expr):
+                raise ValueError("Expresión no permitida")
 
             # Evaluación segura
             self.resultado_valor = eval(expr, {"__builtins__": {}}, self._contexto_evaluacion())
