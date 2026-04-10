@@ -49,9 +49,20 @@ class PantallaLCD(QWidget):
     - Estados de encendido/apagado
     """
 
+    _RE_EXP_COMPLEJO = re.compile(r'\*\*\(([^)]+)\)')
+    _RE_EXP_SIMPLE = re.compile(r'\*\*(\d+\.?\d*)')
+    _RE_NTHROOT = re.compile(r'nthroot\(([^,]+),([^)]+)\)')
+
+    _SUPERINDICES = {
+        '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+        '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+        '+': '⁺', '-': '⁻', '(': '⁽', ')': '⁾', '.': '·'
+    }
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.operacion = ""
+        self.operacion_visual = ""
         self.resultado = "0"
         self.modo = "DEG"
         self.encendida = False
@@ -72,6 +83,7 @@ class PantallaLCD(QWidget):
 
     def setOperacion(self, texto):
         self.operacion = texto
+        self.operacion_visual = self.formato_visual(texto)
         self.update()
 
     def setResultado(self, valor):
@@ -100,32 +112,26 @@ class PantallaLCD(QWidget):
         - sqrt( → √(
         - nthroot(x,n) → ⁿ√(x)
         """
-        superindices = {
-            '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
-            '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
-            '+': '⁺', '-': '⁻', '(': '⁽', ')': '⁾', '.': '·'
-        }
-
         def reemplazar_exp_complejo(match):
             contenido = match.group(1)
-            return ''.join(superindices.get(c, c) for c in contenido)
+            return ''.join(self._SUPERINDICES.get(c, c) for c in contenido)
 
-        resultado = re.sub(r'\*\*\(([^)]+)\)', reemplazar_exp_complejo, texto)
+        resultado = self._RE_EXP_COMPLEJO.sub(reemplazar_exp_complejo, texto)
 
         def reemplazar_exp_simple(match):
             exp = match.group(1)
-            return ''.join(superindices.get(c, c) for c in exp)
+            return ''.join(self._SUPERINDICES.get(c, c) for c in exp)
 
-        resultado = re.sub(r'\*\*(\d+\.?\d*)', reemplazar_exp_simple, resultado)
+        resultado = self._RE_EXP_SIMPLE.sub(reemplazar_exp_simple, resultado)
         resultado = resultado.replace('sqrt(', '√(')
 
         def reemplazar_nthroot(match):
             radicando = match.group(1)
             indice = match.group(2)
-            indice_sup = ''.join(superindices.get(c, c) for c in indice)
+            indice_sup = ''.join(self._SUPERINDICES.get(c, c) for c in indice)
             return f'{indice_sup}√({radicando})'
 
-        resultado = re.sub(r'nthroot\(([^,]+),([^)]+)\)', reemplazar_nthroot, resultado)
+        resultado = self._RE_NTHROOT.sub(reemplazar_nthroot, resultado)
         resultado = resultado.replace('nthroot(', 'ⁿ√(')
         resultado = resultado.replace('**', '^')
         return resultado
@@ -262,7 +268,7 @@ class PantallaLCD(QWidget):
         painter.setFont(font_op)
         painter.setPen(QColor(40, 60, 30))
 
-        texto = self.formato_visual(self.operacion)
+        texto = self.operacion_visual
         x = 10
         y = 55
         i = 0
