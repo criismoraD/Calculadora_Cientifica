@@ -621,16 +621,18 @@ class Calculadora(QWidget):
         nav_layout.addStretch()
 
         nav_data = [
-            ("|◀", lambda: self.ir_a_posicion(0)),
-            ("◀", lambda: self.mover_cursor(-1)),
-            ("▶", lambda: self.mover_cursor(1)),
-            ("▶|", lambda: self.ir_a_posicion(-1)),
+            ("|◀", lambda: self.ir_a_posicion(0), "Ir al inicio (Home)"),
+            ("◀", lambda: self.mover_cursor(-1), "Mover a la izquierda (Flecha Izq)"),
+            ("▶", lambda: self.mover_cursor(1), "Mover a la derecha (Flecha Der)"),
+            ("▶|", lambda: self.ir_a_posicion(-1), "Ir al final (End)"),
         ]
 
-        for texto, func in nav_data:
+        for texto, func, tooltip in nav_data:
             btn = QPushButton(texto)
             btn.setObjectName("btn_nav")
             btn.setFixedSize(55, 32)
+            btn.setToolTip(tooltip)
+            btn.setAccessibleName(tooltip)
             btn.clicked.connect(func)
             nav_layout.addWidget(btn)
 
@@ -675,8 +677,16 @@ class Calculadora(QWidget):
                 btn.setObjectName("btn_numero")
             elif texto == '=':
                 btn.setObjectName("btn_igual")
+                btn.setToolTip("Calcular (Enter)")
+                btn.setAccessibleName("Calcular (Enter)")
             elif texto in ['C', '⌫']:
                 btn.setObjectName("btn_borrar")
+                if texto == 'C':
+                    btn.setToolTip("Limpiar todo (Esc)")
+                    btn.setAccessibleName("Limpiar todo (Esc)")
+                elif texto == '⌫':
+                    btn.setToolTip("Borrar (Backspace)")
+                    btn.setAccessibleName("Borrar (Backspace)")
             else:
                 btn.setObjectName("btn_operador")
             btn.setFixedSize(75, 50)
