@@ -22,7 +22,7 @@ Crear una calculadora cientifica visualmente atractiva y funcional para operacio
 - Operaciones basicas: suma, resta, multiplicacion y division
 - Funciones cientificas: sin, cos, tan, asin, acos, atan, log, ln, sqrt, factorial, nthroot
 - Formato visual: superindices y fracciones en pantalla LCD
-- Tema visual mejorado: paleta base oscura con `QPalette` + personalizacion QSS
+- Tema visual mejorado: paleta base oscura con `QPalette` + personalización QSS
 - Utilidades: copiar/pegar, navegacion por cursor, encendido/apagado
 
 ## Estructura del proyecto 📁
