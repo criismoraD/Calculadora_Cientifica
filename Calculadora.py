@@ -997,8 +997,7 @@ class Calculadora(QWidget):
 
         nodos_permitidos = {
             'Expression', 'BinOp', 'UnaryOp', 'Add', 'Sub', 'Mult', 'Div',
-            'Pow', 'Mod', 'USub', 'UAdd', 'Constant', 'Name', 'Load', 'Call',
-            'Num', 'NameConstant' # Compatibilidad con Python antiguo
+            'Pow', 'Mod', 'USub', 'UAdd', 'Constant', 'Name', 'Load', 'Call'
         }
 
         nombres_permitidos = set(self._contexto_evaluacion().keys())
