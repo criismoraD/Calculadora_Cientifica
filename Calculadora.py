@@ -717,13 +717,7 @@ class Calculadora(QWidget):
     def _pegar_operacion(self):
         self.reproducir_sonido()
         texto = QApplication.clipboard().text()
-        self.operacion_actual = (
-            self.operacion_actual[:self.cursor_pos]
-            + texto
-            + self.operacion_actual[self.cursor_pos:]
-        )
-        self.cursor_pos += len(texto)
-        self._actualizar_pantalla()
+        self._insertar_en_cursor(texto)
 
     # ====================================================================
     # NAVEGACIÓN DEL CURSOR
@@ -791,8 +785,8 @@ class Calculadora(QWidget):
         self.pantalla.setOperacion(texto_con_cursor)
         self.pantalla.setResultado(self.resultado_valor)
 
-    def _insertar_texto(self, texto):
-        self.reproducir_sonido()
+    def _insertar_en_cursor(self, texto):
+        """Inserta texto en la posición actual del cursor y lo desplaza."""
         self.operacion_actual = (
             self.operacion_actual[:self.cursor_pos]
             + texto
@@ -800,6 +794,10 @@ class Calculadora(QWidget):
         )
         self.cursor_pos += len(texto)
         self._actualizar_pantalla()
+
+    def _insertar_texto(self, texto):
+        self.reproducir_sonido()
+        self._insertar_en_cursor(texto)
 
     def _hay_numero_antes(self):
         """¿Hay un número, ')' o 'π' justo antes del cursor?"""
@@ -872,23 +870,11 @@ class Calculadora(QWidget):
         self.reproducir_sonido()
 
         if texto.isdigit() or texto == '.':
-            self.operacion_actual = (
-                self.operacion_actual[:self.cursor_pos]
-                + texto
-                + self.operacion_actual[self.cursor_pos:]
-            )
-            self.cursor_pos += 1
-            self._actualizar_pantalla()
+            self._insertar_en_cursor(texto)
 
         elif texto in ('(', ')', '+', '-', '×', '/'):
             real = '*' if texto == '×' else texto
-            self.operacion_actual = (
-                self.operacion_actual[:self.cursor_pos]
-                + real
-                + self.operacion_actual[self.cursor_pos:]
-            )
-            self.cursor_pos += 1
-            self._actualizar_pantalla()
+            self._insertar_en_cursor(real)
 
         elif texto == '=':
             self._calcular_resultado()
