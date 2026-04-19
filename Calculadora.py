@@ -316,6 +316,11 @@ class PantallaLCD(QWidget):
 # CLASE CALCULADORA PRINCIPAL
 # ============================================================================
 class Calculadora(QWidget):
+    # Nodos de AST permitidos para evaluación segura
+    _NODOS_PERMITIDOS = {
+        'Expression', 'BinOp', 'UnaryOp', 'Add', 'Sub', 'Mult', 'Div',
+        'Pow', 'Mod', 'USub', 'UAdd', 'Constant', 'Name', 'Load', 'Call'
+    }
 
     def __init__(self):
         super().__init__()
@@ -344,6 +349,10 @@ class Calculadora(QWidget):
         # Sonidos
         self.sonido_click = QSoundEffect()
         self._crear_sonido_click()
+
+        # Cache de contexto para evaluación segura
+        self._contexto_eval_cache = self._contexto_evaluacion()
+        self._nombres_permitidos_cache = set(self._contexto_eval_cache.keys())
 
         self._cargar_estilos()
         self._init_ui()
@@ -995,17 +1004,10 @@ class Calculadora(QWidget):
         except Exception:
             return False
 
-        nodos_permitidos = {
-            'Expression', 'BinOp', 'UnaryOp', 'Add', 'Sub', 'Mult', 'Div',
-            'Pow', 'Mod', 'USub', 'UAdd', 'Constant', 'Name', 'Load', 'Call'
-        }
-
-        nombres_permitidos = set(self._contexto_evaluacion().keys())
-
         for nodo in ast.walk(tree):
-            if type(nodo).__name__ not in nodos_permitidos:
+            if type(nodo).__name__ not in self._NODOS_PERMITIDOS:
                 return False
-            if isinstance(nodo, ast.Name) and getattr(nodo, 'id', None) not in nombres_permitidos:
+            if isinstance(nodo, ast.Name) and getattr(nodo, 'id', None) not in self._nombres_permitidos_cache:
                 return False
 
         return True
@@ -1049,7 +1051,7 @@ class Calculadora(QWidget):
                 raise ValueError("Expresión no permitida")
 
             # Evaluación segura
-            self.resultado_valor = eval(expr, {"__builtins__": {}}, self._contexto_evaluacion())
+            self.resultado_valor = eval(expr, {"__builtins__": {}}, self._contexto_eval_cache)
             self._actualizar_pantalla()
 
         except ZeroDivisionError:
